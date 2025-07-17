@@ -1,0 +1,16 @@
+package build
+
+import mill.*
+import mill.scalalib.*
+
+object `package` extends ScalaModule {
+  def scalaVersion = "3.3.6"
+
+  def mvnDeps = Seq(
+    mvn"io.circe::circe-yaml-v12:0.16.0",
+    mvn"io.circe::circe-core::0.14.14",
+    mvn"io.circe::circe-parser::0.14.14",
+    mvn"com.lihaoyi::os-lib:0.11.4"
+  )
+
+}
