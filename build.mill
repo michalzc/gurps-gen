@@ -1,9 +1,15 @@
+//| mvnDeps: ["com.goyeau::mill-scalafix::0.6.0"]
+
 package build
 
 import mill.*
 import mill.scalalib.*
+import mill.api.Task.Simple
+import com.goyeau.mill.scalafix.ScalafixModule
 
 object `package` extends Module {
+
+  def `run-gen`(args: String*) = generator.run(Task.Anon(Args(args)))
 
   object generator extends ScalaModule {
 
@@ -13,8 +19,17 @@ object `package` extends Module {
       mvn"io.circe::circe-yaml-v12:0.16.0",
       mvn"io.circe::circe-core::0.14.14",
       mvn"io.circe::circe-parser::0.14.14",
+      mvn"io.circe::circe-generic::0.14.14",
       mvn"com.lihaoyi::os-lib:0.11.4"
     )
+
+    object test extends ScalaTests, TestModule.ScalaTest {
+
+      def mvnDeps = Seq(
+        mvn"org.scalatest::scalatest:3.2.19"
+      )
+
+    }
   }
 
 }

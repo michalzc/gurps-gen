@@ -8,7 +8,9 @@ import scala.io.Source
 import michalz.rpg.gurpsgen.utils.orThrow
 
 def parseYaml(file: File): Unit = {
-  val source = Using(Source.fromFile(file)) { reader => reader.mkString }.orThrow
+  val source = Using(Source.fromFile(file)) { reader =>
+    reader.mkString
+  }.orThrow
   val json = parse(source).orThrow
 
   println(json)
