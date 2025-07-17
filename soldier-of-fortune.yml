@@ -3,7 +3,7 @@ Attributes:
   - DX 13 [60]
   - IQ 11 [20]
   - HT 11 [10]
-Secondary Characteristics: []
+Secondary Characteristics: [ ]
 Advantages:
   - points: 20
     choices:
@@ -24,7 +24,7 @@ Advantages:
         - Magic Resisance 5 [10]
         - Magic Resisance 6 [12]
         - Magic Resisance 7 [14]
-        - Magic Resisance 8 [16]      
+        - Magic Resisance 8 [16]
         - Magic Resisance 9 [18]
         - Magic Resisance 10 [20]
       - Outdoorsman 1 [10]

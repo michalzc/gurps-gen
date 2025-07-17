@@ -7,29 +7,35 @@ import mill.scalalib.*
 import mill.api.Task.Simple
 import com.goyeau.mill.scalafix.ScalafixModule
 
-object `package` extends Module {
+def fix(args: String*) = Task.Command {
+  generator.fix(args: _*)()
+  generator.test.fix(args: _*)()
+}
 
-  def `run-gen`(args: String*) = generator.run(Task.Anon(Args(args)))
+def `run-gen`(args: String*) =
+  generator.run(Task.Anon(Args(args)))
 
-  object generator extends ScalaModule {
+object generator extends ScalaModule, ScalafixModule {
 
-    def scalaVersion = "3.3.6"
+  def scalaVersion = "3.3.6"
+
+  override def scalacOptions = Seq(
+    "-Wunused:all"
+  )
+
+  def mvnDeps = Seq(
+    mvn"io.circe::circe-yaml-v12:0.16.0",
+    mvn"io.circe::circe-core::0.14.14",
+    mvn"io.circe::circe-parser::0.14.14",
+    mvn"io.circe::circe-generic::0.14.14",
+    mvn"com.lihaoyi::os-lib:0.11.4"
+  )
+
+  object test extends ScalaTests, TestModule.ScalaTest, ScalafixModule {
 
     def mvnDeps = Seq(
-      mvn"io.circe::circe-yaml-v12:0.16.0",
-      mvn"io.circe::circe-core::0.14.14",
-      mvn"io.circe::circe-parser::0.14.14",
-      mvn"io.circe::circe-generic::0.14.14",
-      mvn"com.lihaoyi::os-lib:0.11.4"
+      mvn"org.scalatest::scalatest:3.2.19"
     )
 
-    object test extends ScalaTests, TestModule.ScalaTest {
-
-      def mvnDeps = Seq(
-        mvn"org.scalatest::scalatest:3.2.19"
-      )
-
-    }
   }
-
 }

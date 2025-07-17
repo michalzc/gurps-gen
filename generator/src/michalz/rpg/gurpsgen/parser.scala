@@ -1,10 +1,12 @@
 package michalz.rpg.gurpsgen
 
 import java.io.File
-import io.circe.yaml.v12.parser.parse
-import scala.util.Using
 
 import scala.io.Source
+import scala.util.Using
+
+import io.circe.yaml.v12.parser.parse
+
 import michalz.rpg.gurpsgen.utils.orThrow
 
 def parseYaml(file: File): Unit = {
