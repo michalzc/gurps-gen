@@ -1,22 +1,22 @@
 package michalz.rpg.gurpsgen.model
 
-sealed trait GeneratorElement
+sealed trait TemplateElement
 
-case class Element(name: String, cost: Int) extends GeneratorElement
+case class TemplateTrait(name: String, cost: Int) extends TemplateElement
 
-case class ListElements(elements: List[GeneratorElement]) extends GeneratorElement
+case class TemplateGroup(elements: List[TemplateElement]) extends TemplateElement
 
-object ListElements:
-  def apply(elems: GeneratorElement*): ListElements =
-    ListElements(elems.toList)
+object TemplateGroup:
+  def apply(elems: TemplateElement*): TemplateGroup =
+    TemplateGroup(elems.toList)
 
-case class Generator(points: Int, choices: GeneratorElement) extends GeneratorElement
+case class TemplateChoice(points: Int, choices: TemplateElement) extends TemplateElement
 
-case class NPCGenerator(
-    elements: Map[String, GeneratorElement]
+case class NPCTemplate(
+    elements: Map[String, TemplateElement]
 )
 
-object NPCGenerator:
+object NPCTemplate:
   def appy(
-      elems: (String, GeneratorElement)*
-  ): NPCGenerator = NPCGenerator(elems.toMap)
+      elems: (String, TemplateElement)*
+  ): NPCTemplate = NPCTemplate(elems.toMap)

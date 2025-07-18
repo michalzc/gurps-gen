@@ -12,34 +12,34 @@ import michalz.rpg.gurpsgen.model._
 
 val ElementRegEx = """([^\[^\]]+)\s+\[([-\d][\d]*)\]""".r
 
-given Decoder[Element] = Decoder.decodeString.emap {
+given Decoder[TemplateTrait] = Decoder.decodeString.emap {
   case ElementRegEx(name, cost) =>
-    Right(Element(name, cost.toInt))
-  case s => Left(s"$s is not proper Element")
+    Right(TemplateTrait(name, cost.toInt))
+  case s => Left(s"$s is not a proper Element")
 }
 
-given Encoder[Element] =
+given Encoder[TemplateTrait] =
   Encoder.encodeString.contramap(elem => s"${elem.name} [${elem.cost}]")
 
-given Decoder[ListElements] = Decoder
-  .decodeList[GeneratorElement]
-  .map(ListElements.apply)
+given Decoder[TemplateGroup] = Decoder
+  .decodeList[TemplateElement]
+  .map(TemplateGroup.apply)
 
-given Decoder[Generator] = deriveDecoder[Generator]
+given Decoder[TemplateChoice] = deriveDecoder[TemplateChoice]
 
-given Decoder[GeneratorElement] =
+given Decoder[TemplateElement] =
   (c: HCursor) =>
-    c.as[Element]
-      .orElse(c.as[ListElements])
-      .orElse(c.as[Generator])
+    c.as[TemplateTrait]
+      .orElse(c.as[TemplateGroup])
+      .orElse(c.as[TemplateChoice])
 
-given Decoder[NPCGenerator] = (c: HCursor) => {
+given Decoder[NPCTemplate] = (c: HCursor) => {
   for {
     obj <- c.as[JsonObject]
     lst <- obj.toList
       .traverse((k, v) =>
-        v.as[GeneratorElement]
+        v.as[TemplateElement]
           .map(vv => k -> vv)
       )
-  } yield NPCGenerator(lst.toMap)
+  } yield NPCTemplate(lst.toMap)
 }

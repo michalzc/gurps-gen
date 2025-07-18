@@ -13,6 +13,6 @@ extension [T](self: Try[T])
 extension [E, T](self: Either[E, T])
   def orThrow: T = self match {
     case Left(ex: Throwable) => throw ex
-    case Left(other)  => throw new Exception(other.toString)
-    case Right(value) => value
+    case Left(other)         => throw new Exception(other.toString)
+    case Right(value)        => value
   }

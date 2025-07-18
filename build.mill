@@ -8,8 +8,8 @@ import mill.api.Task.Simple
 import com.goyeau.mill.scalafix.ScalafixModule
 
 def fix(args: String*) = Task.Command {
-  generator.fix(args: _*)()
-  generator.test.fix(args: _*)()
+  generator.fix(args*)()
+  generator.test.fix(args*)()
 }
 
 def `run-gen`(args: String*) =
@@ -28,13 +28,17 @@ object generator extends ScalaModule, ScalafixModule {
     mvn"io.circe::circe-core::0.14.14",
     mvn"io.circe::circe-parser::0.14.14",
     mvn"io.circe::circe-generic::0.14.14",
-    mvn"com.lihaoyi::os-lib:0.11.4"
+    mvn"com.lihaoyi::os-lib:0.11.4",
+    mvn"com.typesafe.scala-logging::scala-logging:3.9.4",
+    mvn"org.apache.logging.log4j:log4j-slf4j-impl:2.0.2",
+    mvn"org.apache.logging.log4j:log4j-core:2.25.1"
   )
 
   object test extends ScalaTests, TestModule.ScalaTest, ScalafixModule {
 
     def mvnDeps = Seq(
-      mvn"org.scalatest::scalatest:3.2.19"
+      mvn"org.scalatest::scalatest:3.2.19",
+      mvn"com.lihaoyi::pprint:0.9.0"
     )
 
   }
