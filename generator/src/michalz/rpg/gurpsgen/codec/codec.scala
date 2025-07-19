@@ -1,14 +1,14 @@
 package michalz.rpg.gurpsgen.codec
 
-import cats.syntax.traverse._
+import cats.syntax.traverse.*
 
 import io.circe.Decoder
 import io.circe.Encoder
 import io.circe.HCursor
 import io.circe.JsonObject
-import io.circe.generic.semiauto._
+import io.circe.generic.semiauto.*
 
-import michalz.rpg.gurpsgen.model._
+import michalz.rpg.gurpsgen.model.*
 
 val ElementRegEx = """([^\[^\]]+)\s+\[([-\d][\d]*)\]""".r
 

@@ -6,6 +6,7 @@ import mill.*
 import mill.scalalib.*
 import mill.api.Task.Simple
 import com.goyeau.mill.scalafix.ScalafixModule
+import mill.scalalib.scalafmt.ScalafmtModule
 
 def fix(args: String*) = Task.Command {
   generator.fix(args*)()
@@ -15,7 +16,7 @@ def fix(args: String*) = Task.Command {
 def `run-gen`(args: String*) =
   generator.run(Task.Anon(Args(args)))
 
-object generator extends ScalaModule, ScalafixModule {
+object generator extends ScalaModule, ScalafixModule, ScalafmtModule {
 
   def scalaVersion = "3.3.6"
 
@@ -29,8 +30,10 @@ object generator extends ScalaModule, ScalafixModule {
     mvn"io.circe::circe-parser::0.14.14",
     mvn"io.circe::circe-generic::0.14.14",
     mvn"com.lihaoyi::os-lib:0.11.4",
+    mvn"org.typelevel::cats-effect:3.6.2",
     mvn"dev.zio::zio:2.1.19",
     mvn"com.typesafe.scala-logging::scala-logging:3.9.4",
+    mvn"org.typelevel::log4cats-slf4j:2.7.1",
     mvn"org.apache.logging.log4j:log4j-slf4j-impl:2.0.2",
     mvn"org.apache.logging.log4j:log4j-core:2.25.1"
   )
@@ -39,7 +42,8 @@ object generator extends ScalaModule, ScalafixModule {
 
     def mvnDeps = Seq(
       mvn"org.scalatest::scalatest:3.2.19",
-      mvn"com.lihaoyi::pprint:0.9.0"
+      mvn"com.lihaoyi::pprint:0.9.0",
+      mvn"org.typelevel::cats-effect-testing-scalatest::1.2.0"
     )
 
   }

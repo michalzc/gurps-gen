@@ -1,9 +1,16 @@
 package michalz.rpg.gurpsgen.model
 
+import cats.Semigroup
+import cats.instances.list.*
+import cats.syntax.semigroup.*
+
 case class GeneratedTraits(traits: List[String], totalCost: Int)
 object GeneratedTraits:
-  def fromTemplateTrait(t: TemplateTrait) = GeneratedTraits(List(t.name), t.cost)
-  def empty: GeneratedTraits = GeneratedTraits(List.empty, 0)
+  def fromTemplateTrait(t: TemplateTrait): GeneratedTraits = GeneratedTraits(List(t.name), t.cost)
+  def empty: GeneratedTraits                               = GeneratedTraits(List.empty, 0)
+  def make(traitName: String, cost: Int): GeneratedTraits  = GeneratedTraits(List(traitName), cost)
+  given Semigroup[GeneratedTraits]                         = (x: GeneratedTraits, y: GeneratedTraits) =>
+    GeneratedTraits(traits = x.traits |+| y.traits, totalCost = x.totalCost |+| y.totalCost)
 
 sealed trait TemplateElement
 

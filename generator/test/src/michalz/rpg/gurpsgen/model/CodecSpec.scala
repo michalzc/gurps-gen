@@ -4,7 +4,7 @@ import scala.io.Source
 import scala.util.Using
 
 import io.circe.Json
-import io.circe.syntax._
+import io.circe.syntax.*
 import io.circe.yaml.v12.parser.parse
 
 import com.typesafe.scalalogging.LazyLogging
@@ -16,6 +16,7 @@ import michalz.rpg.gurpsgen.codec.given
 import michalz.rpg.gurpsgen.utils.orThrow
 
 class CodecSpec extends AnyFreeSpec, Matchers, EitherValues, LazyLogging {
+
   "A codec for" - {
     "TemplateTrait" - {
       "should deserialize" - {
