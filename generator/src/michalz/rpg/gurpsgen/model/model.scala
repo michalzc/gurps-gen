@@ -1,5 +1,10 @@
 package michalz.rpg.gurpsgen.model
 
+case class GeneratedTraits(traits: List[String], totalCost: Int)
+object GeneratedTraits:
+  def fromTemplateTrait(t: TemplateTrait) = GeneratedTraits(List(t.name), t.cost)
+  def empty: GeneratedTraits = GeneratedTraits(List.empty, 0)
+
 sealed trait TemplateElement
 
 case class TemplateTrait(name: String, cost: Int) extends TemplateElement

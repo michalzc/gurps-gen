@@ -29,6 +29,7 @@ object generator extends ScalaModule, ScalafixModule {
     mvn"io.circe::circe-parser::0.14.14",
     mvn"io.circe::circe-generic::0.14.14",
     mvn"com.lihaoyi::os-lib:0.11.4",
+    mvn"dev.zio::zio:2.1.19",
     mvn"com.typesafe.scala-logging::scala-logging:3.9.4",
     mvn"org.apache.logging.log4j:log4j-slf4j-impl:2.0.2",
     mvn"org.apache.logging.log4j:log4j-core:2.25.1"
