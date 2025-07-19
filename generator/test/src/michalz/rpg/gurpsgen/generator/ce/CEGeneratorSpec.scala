@@ -32,13 +32,13 @@ class CEGeneratorSpec extends AsyncFreeSpec, Matchers, AsyncIOSpec {
       }
     }
 
-    "TemplateGroup with lazy should" - {
+    "TemplateGroup with budget should" - {
       "return element from one element group" in {
         val elem     = TemplateTrait("elem", 0)
         val expected = GeneratedTraits.fromTemplateTrait(elem)
         val genTrait = TemplateGroup(elem)
 
-        genTrait.generateWithBudget[IO](10).asserting(res => res shouldEqual expected)
+        genTrait.generateWithBudget[IO](10, 0).asserting(res => res shouldEqual expected)
       }
 
       "return all elements from group if below budget" in {
@@ -50,7 +50,7 @@ class CEGeneratorSpec extends AsyncFreeSpec, Matchers, AsyncIOSpec {
         val genTrait = TemplateGroup(elems)
 
         genTrait
-          .generateWithBudget[IO](10)
+          .generateWithBudget[IO](10, 0)
           .asserting(_.traits should contain theSameElementsAs elems.map(_.name))
       }
 
@@ -59,7 +59,7 @@ class CEGeneratorSpec extends AsyncFreeSpec, Matchers, AsyncIOSpec {
         val genTrait = TemplateGroup(elems.toList)
 
         genTrait
-          .generateWithBudget[IO](10)
+          .generateWithBudget[IO](10, 5)
           .flatTap { result =>
             result.traits.traverse(elem => debug"Generated: $elem")
           }
