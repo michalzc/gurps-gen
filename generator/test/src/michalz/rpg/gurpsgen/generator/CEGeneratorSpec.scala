@@ -1,4 +1,4 @@
-package michalz.rpg.gurpsgen.generator.ce
+package michalz.rpg.gurpsgen.generator
 
 import cats.effect.IO
 import cats.effect.std.Random
